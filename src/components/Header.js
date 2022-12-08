@@ -1,85 +1,89 @@
+import { connect } from "react-redux";
 import styled from "styled-components";
+import { signOutAPI } from "../actions";
 
 const Header = (props) => {
-    return (
-        <Container>
-            <Content>
-                <Logo>
-                    <a href="/home">
-                        <img src="/images/home-logo.svg" alt="" />
-                    </a>
-                </Logo>
-                <Search>
-                    <div>
-                        <input type="text" placeholder="Search" />
-                    </div>
-                    <SearchIcon>
-                        <img src="/images/search-icon.svg" alt="" />
-                    </SearchIcon>
-                </Search>
-                <Nav>
-                    <NavListWrap>
-                        <NavList>
-                            <a href="#" className="active">
-                                <img src="/images/nav-home.svg" alt="" />
-                                <span>Home</span>
-                            </a>
-                        </NavList>
-                        <NavList>
-                            <a href="#">
-                                <img src="/images/nav-network.svg" alt="" />
-                                <span>My Networks</span>
-                            </a>
-                        </NavList>
-                        <NavList>
-                            <a href="#">
-                                <img src="/images/nav-jobs.svg" alt="" />
-                                <span>Jobs</span>
-                            </a>
-                        </NavList>
-                        <NavList>
-                            <a href="#">
-                                <img src="/images/nav-messaging.svg" alt="" />
-                                <span>Messaging</span>
-                            </a>
-                        </NavList>
-                        <NavList>
-                            <a href="#">
-                                <img src="/images/nav-notifications.svg" alt="" />
-                                <span>Notifications</span>
-                            </a>
-                        </NavList>
+  return (
+    <Container>
+      <Content>
+        <Logo>
+          <a href="/home">
+            <img src="/images/home-logo.svg" alt="" />
+          </a>
+        </Logo>
+        <Search>
+          <div>
+            <input type="text" placeholder="Search" />
+          </div>
+          <SearchIcon>
+            <img src="/images/search-icon.svg" alt="" />
+          </SearchIcon>
+        </Search>
+        <Nav>
+          <NavListWrap>
+            <NavList>
+              <a href="#" className="active">
+                <img src="/images/nav-home.svg" alt="" />
+                <span>Home</span>
+              </a>
+            </NavList>
+            <NavList>
+              <a href="#">
+                <img src="/images/nav-network.svg" alt="" />
+                <span>My Networks</span>
+              </a>
+            </NavList>
+            <NavList>
+              <a href="#">
+                <img src="/images/nav-jobs.svg" alt="" />
+                <span>Jobs</span>
+              </a>
+            </NavList>
+            <NavList>
+              <a href="#">
+                <img src="/images/nav-messaging.svg" alt="" />
+                <span>Messaging</span>
+              </a>
+            </NavList>
+            <NavList>
+              <a href="#">
+                <img src="/images/nav-notifications.svg" alt="" />
+                <span>Notifications</span>
+              </a>
+            </NavList>
 
-                        <User>
-                            <a>
-                                <img src="/images/user.svg" />
-                                <span>
-                                    Me
-                                    <img src="/images/down-icon.svg" />
-                                </span>
-                            </a>
-                            <SignOut>
-                                <a>
-                                    Sign Out
-                                </a>
-                            </SignOut>
-                        </User>
-                        <Work>
-                            <a>
-                                <img src="/images/nav-work.svg" />
-                                <span>
-                                    Work
-                                    <img src="/images/down-icon.svg" />
-                                </span>
-                            </a>
-                        </Work>
-                    </NavListWrap>
-                </Nav>
-            </Content>
-        </Container>
-    );
+            <User>
+              <a>
+                {props.user && props.user.photoURL ? (
+                  <img src={props.user.photoURL} alt="userimg" />
+                ) : (
+                  <img src="/images/user.svg" />
+                )}
+                <span>
+                  Me
+                  <img src="/images/down-icon.svg" />
+                </span>
+              </a>
+
+              <SignOut onClick={() => props.signOut()}>
+                <a>Sign Out</a>
+              </SignOut>
+            </User>
+            <Work>
+              <a>
+                <img src="/images/nav-work.svg" />
+                <span>
+                  Work
+                  <img src="/images/down-icon.svg" />
+                </span>
+              </a>
+            </Work>
+          </NavListWrap>
+        </Nav>
+      </Content>
+    </Container>
+  );
 };
-
 
 const Container = styled.div`
   background-color: white;
@@ -249,6 +253,13 @@ const Work = styled(User)`
   border-left: 1px solid rgba(0, 0, 0, 0.08);
 `;
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+const mapDispatchToProps = (dispatch) => ({
+  signOut: () => dispatch(signOutAPI()),
+});
 
-
-export default Header
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
