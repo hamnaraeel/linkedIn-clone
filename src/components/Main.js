@@ -96,7 +96,9 @@ const Main = (props) => {
                       {!article.sharedImg && article.video ? (
                         <ReactPlayer width={"100%"} url={article.video} />
                       ) : (
-                        article.sharedImg && <img src={article.sharedImg} />
+                        article.sharedImg && (
+                          <img width={"100%"} src={article.sharedImg} />
+                        )
                       )}
                     </a>
                   </SharedImg>
