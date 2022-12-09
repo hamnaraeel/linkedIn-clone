@@ -195,6 +195,7 @@ const SharedContent = styled.div`
   flex-direction: column;
   flex-grow: 1;
   overflow-y: auto;
+  height: 300px;
   vertical-align: baseline;
   background: transparent;
   padding: 8px 12px;
